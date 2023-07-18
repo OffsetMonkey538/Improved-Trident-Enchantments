@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "ite",
+	"version": "1.0",
+	"name": "Improved Trident Enchantments",
+	"description": "this mod makes riptide enchant works better",
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/improved-trident-enchantments",
+		"sources": "https://github.com/Dplayend/Improved-Trident-Enchantments",
+		"issues": "https://github.com/Dplayend/Improved-Trident-Enchantments/issues"
+	},
+	"license": "CC0-1.0",
+	"icon": "icon.png",
+	"environment": "*",
+	"entrypoints": { "main": [ "com.dplayend.ite.ImprovedTridentEnchantments" ] },
+	"mixins": [ "ite.mixins.json" ],
+	"depends": {
+		"fabricloader": "*",
+		"fabric": "*",
+		"minecraft": ">=1.19",
+		"java": "*"
+	},
+	"suggests": {
+		"merenc": "*"
+	},
+	"authors": [ "Dplayend" ],
+	"custom": { "modmenu": { "links": { "modmenu.discord": "https://discord.gg/AsFE4T9FbN" } } }
+}
