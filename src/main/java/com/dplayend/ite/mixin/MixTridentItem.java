@@ -1,5 +1,6 @@
 package com.dplayend.ite.mixin;
 
+import com.dplayend.ite.api.TridentThrowListenerRegistry;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -97,13 +98,22 @@ public class MixTridentItem {
     }
 
     @Unique private void createTrident(ItemStack stack, World world, PlayerEntity playerEntity) {
+        float pitch = playerEntity.getPitch();
+        float yaw = playerEntity.getYaw();
+        float roll = 0;
+        float speed = 2.5f;
+        float divergence = 1.0f;
+
         TridentEntity tridentEntity = new TridentEntity(world, playerEntity, stack);
-        tridentEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F, 1.0F);
+        tridentEntity.setVelocity(playerEntity, pitch, yaw, roll, speed, divergence);
         if (playerEntity.getAbilities().creativeMode) {
             tridentEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
         }
 
         world.spawnEntity(tridentEntity);
+
+        TridentThrowListenerRegistry.INSTANCE.getListeners().forEach(listener -> listener.accept(tridentEntity, stack, playerEntity, pitch, yaw, roll, speed, divergence));
+
         world.playSoundFromEntity(null, tridentEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
         if (!playerEntity.getAbilities().creativeMode) {
             playerEntity.getInventory().removeOne(stack);
